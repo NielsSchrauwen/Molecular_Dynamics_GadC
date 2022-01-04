@@ -1,0 +1,27 @@
+# Second part of equilibration of protein membrane system with explicit water
+# 5 ns MD of NpT ensamble at 300 K and 1 bar
+# no constraints on system
+# SHAKE is applied because of TIP3P water, and timestep is set to 2 fs
+ &cntrl
+    imin=0,       ! MD, not minimization
+    ntx=5,        ! crd reading mode, changed from 1 to 5
+    irest=1,      ! this is a continuation of previous run
+    ntxo=1,       ! formatted ascii format 
+    igb=0,        ! no generalized Born used, defult
+    ntb=2,        ! the system is periodic, constant pressure
+    ntp = 1,      ! yes pressure scaling
+    pres0=1.0,    ! pressure 1 bar
+    cut=10.0,     ! nonbonded cutoff in A, previously I used 15.0
+    dielc=1.0,    ! default             
+    ntpr=50,      ! print to mdout every ntpr steps
+    nsnb=20,      ! frequency of non-bonded list update
+    ntwx=500,	  ! every ntwx write coordinates
+    nstlim=2500000, ! total number of steps 
+    dt=0.002,     ! timestep
+    ntr=0,        ! no Cartesian restraints
+    ntc=2,        ! SHAKE
+    ntf=2,        ! complete force evaluation, SHAKE
+    temp0=300,    ! initial temperature
+    ntt=1,        ! Berendsen thermomether
+    tautp=2,      ! pressure coupling
+ &end

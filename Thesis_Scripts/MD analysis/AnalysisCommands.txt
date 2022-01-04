@@ -1,0 +1,12 @@
+#convert trajectory
+gmx trjconv -s *5ns.tpr -f *100ns.xtc -o *_100ns_corrected.xtc -pbc nojump
+gmx trjconv -f *100ns_corrected.xtc -o *snap.xtc -b 10000 -e 100000 -skip 900
+
+#Calculation of RMSD
+gmx rms -s *5ns.tpr -f *100ns_corrected.xtc -o *_RMSD.xvg
+
+#Calculation of RMSF
+gmx rmsf -s *5ns.tpr -f *100ns_corrected.xtc -o *_RMSD.xvg
+
+#Channel calculation
+gmx_clusterByFeatures hole -s *5ns.tpr -f *.xtc -o *_radius.dat

@@ -1,0 +1,27 @@
+#!/bin/bash
+#PBS -N WT_100ns
+#PBS -l nodes=8:ppn=36
+#PBS -l walltime=03:05:00:00
+#PBS -m abe
+#PBS -M niels.schrauwen@student.kuleuven.be
+#PBS -A lp_cosubi
+
+cd $PBS_O_WORKDIR
+module purge
+module load GROMACS/2016.5-intel-2018a
+
+MPI_RANKS_PER_NODE=6
+module load intel 
+
+export HOSTS=`sort -u $PBS_NODEFILE | paste -s -d,`
+export OMP_NUM_THREADS=$(($PBS_NUM_PPN / $MPI_RANKS_PER_NODE))
+export OMP_PROC_BIND=true
+export I_MPI_PIN_DOMAIN=omp
+
+mpirun -hosts $HOSTS -perhost $MPI_RANKS_PER_NODE gmx_mpi mdrun \
+-s WT_5ns.tpr \
+-x WT_100ns.xtc \
+-g WT_100ns.log \
+-c WT_100ns.gro \
+-e WT_100ns.edr \
+-cpo out.cpt 

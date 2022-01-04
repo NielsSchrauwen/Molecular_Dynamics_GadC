@@ -1,0 +1,13 @@
+source leaprc.protein.ff14SB
+source leaprc.lipid14
+source leaprc.water.tip3p
+
+X = loadpdb WT_ch2amb_vmd2amb.pdb
+check X
+
+setbox X "vdw"
+
+saveamberparm X WT_tleapout.top WT_tleapout.crd
+savepdb X WT_tleapout.pdb
+quit
+

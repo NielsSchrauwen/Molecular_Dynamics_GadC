@@ -1,0 +1,65 @@
+#10000 steps of minimization for protein in membrane in a cube of explicit water
+# This second minimization cycle is with restraint on all protein and only heavy atoms of the lipid
+ &cntrl
+    maxcyc=10000, ! maximum number of minimization steps
+    imin=1,       ! minimization, not MD
+    ncyc=5000,    ! after 5000 steps switch from SD to CG method
+    ntmin=1,      ! make SD to CG switch
+    ntx=1,        ! crd reading mode, 1 is default
+    igb=0,        ! no generalized Born used, defult
+    ntb=1,        ! the system is periodic, constant volume
+    ntp = 0,      ! no pressure scaling
+    cut=10.0,     ! nonbonded cutoff in A, previously I used 15.0
+    dielc=1.0,    ! default             
+    ntpr=10,      ! print to mdout every ntpr steps
+    nsnb=20,      ! frequency of non-bonded list update
+    ntr=1,        ! turn on Cartesian restraints
+    ntc=1,        ! no SHAKE
+    ntf=1,        ! complete force evaluation, 1 for no SHAKE
+    drms=0.01,    ! if condition is satisfied, stop the procedure
+ &end
+restrained PROTEIN
+100.0
+RES 1 662
+END
+END
+restrained LIPID HEAVY ATOMS
+100.0
+FIND
+* C117 * *
+* C118 * *
+* C116 * *
+* C115 * *
+* C114 * *
+* C113 * *
+* C112 * *
+* C111 * *
+* C110 * *
+* C19 * *
+* C18 * *
+* C17 * *
+* C16 * *
+* C15 * *
+* C14 * *
+* C13 * *
+* C12 * *
+* C11 * *
+* O12 * *
+* O11 * *
+* C1 * *
+* C2 * *
+* C3 * *
+* O31 * *
+* P31 * *
+* O32 * *
+* C31 * *
+* C32 * *
+* N31 * *
+* O33 * *
+* O34 * *
+* O21 * *
+* C21 * *
+* O22 * *
+SEARCH
+RES 1 662
+END

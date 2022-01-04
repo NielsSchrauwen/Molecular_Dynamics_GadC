@@ -1,0 +1,50 @@
+# First equilibration of protein membrane system with explicit water
+# 300 ps MD of NVT ensamble where T rises from 0 to 300 K in first 250 ps
+# constraint on protein is 25, and on lipids 10
+# SHAKE is applied because of TIP3P water, and timestep is set to 2 fs
+ &cntrl
+    imin=0,       ! MD, not minimization
+    ntx=1,        ! crd reading mode, 1 is default
+    ntxo=1,       ! formatted ascii format 
+    igb=0,        ! no generalized Born used, defult
+    ntb=1,        ! the system is periodic, constant volume
+    ntp = 0,      ! no pressure scaling
+    cut=10.0,     ! nonbonded cutoff in A, previously I used 15.0
+    dielc=1.0,    ! default             
+    ntpr=50,      ! print to mdout every ntpr steps
+    nsnb=20,      ! frequency of non-bonded list update
+    ntwx=500,	  ! every ntwx write coordinates
+    nstlim=150000, ! total number of steps 
+    dt=0.002,     ! timestep
+    ntr=1,        ! turn on Cartesian restraints
+    ntc=2,        ! SHAKE
+    ntf=2,        ! complete force evaluation, SHAKE
+    tempi=0,      ! initial temperature
+    ntt=1,        ! Berendsen thermomether
+    nmropt=1,     ! enables restraint of angles
+ &end
+ &wt
+  type='TEMP0', istep1=0, istep2=250000, value1=0.0, value2=300,
+ &end
+ &wt
+  type='TEMP0', istep1=250001, istep2=300000, value1=300, value2=300,
+ &end
+ &wt
+  type='TAUTP', istep1=0, istep2=250000, value1=0.2, value2=0.2,
+ &end
+  &wt
+  type='TAUTP', istep1=250001, istep2=300000, value1=0.2, value2=1.0,
+ &end
+ &wt
+  type='END',
+ &end
+restrained PROTEIN
+25.0
+RES 1 350
+END
+END
+restrained LIPID
+10.0
+RES 1 350
+END
+END

@@ -1,0 +1,13 @@
+
+plot_radius(radius_mut01, "mut01 channel size")
+average_mut02 <- plot_radius(radius_mut02, "mut02 channel size")
+average_mut03 <- plot_radius(radius_mut03, "mut03 channel size")
+average_mut04 <- plot_radius(radius_mut04, "mut04 channel size")
+average_mut05 <- plot_radius(radius_mut05, "mut05 channel size")
+average_mut06 <- plot_radius(radius_mut06, "mut06 channel size")
+average_mut07 <- plot_radius(radius_mut07, "mut07 channel size")
+average_mut08 <- plot_radius(radius_mut08, "mut08 channel size")
+average_mut09 <- plot_radius(radius_mut09, "mut09 channel size")
+average_mut10 <- plot_radius(radius_mut10, "mut10 channel size")
+average_mut11 <- plot_radius(radius_mut11, "mut11 channel size")
+average_mut12 <- plot_radius(radius_mut12, "mut12 channel size")

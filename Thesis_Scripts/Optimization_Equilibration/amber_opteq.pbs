@@ -1,0 +1,103 @@
+#!/bin/bash
+#PBS -N mut01_OPT_EQ
+#PBS -l nodes=1:ppn=36
+#PBS -l walltime=01:05:00:00
+#PBS -m abe
+#PBS -M 
+#PBS -A 
+
+cd $PBS_O_WORKDIR
+module purge
+module load Amber/17-intel-2018a-cosubi
+
+mpirun sander.MPI \
+-O \
+-p mut01_tleapout.top \
+-i mp_min1.in \
+-c mut01_tleapout.crd \
+-ref mut01_tleapout.crd \
+-r mut01_min1.rst \
+-o mut01_min1.out \
+-inf mut01_min1.inf
+
+mpirun sander.MPI \
+-O \
+-p mut01_tleapout.top \
+-i mp_min2.in \
+-c mut01_min1.rst \
+-ref mut01_min1.rst \
+-r mut01_min2.rst \
+-o mut01_min2.out \
+-inf mut01_min2.inf 
+
+mpirun sander.MPI \
+-O \
+-p mut01_tleapout.top \
+-i mp_min3.in \
+-c mut01_min2.rst \
+-ref mut01_min2.rst \
+-r mut01_min3.rst \
+-o mut01_min3.out \
+-inf mut01_min3.inf 
+
+mpirun sander.MPI \
+-O \
+-p mut01_tleapout.top \
+-i mp_min4.in \
+-c mut01_min3.rst \
+-ref mut01_min3.rst \
+-r mut01_min4.rst \
+-o mut01_min4.out \
+-inf mut01_min4.inf 
+
+mpirun sander.MPI \
+-O \
+-p mut01_tleapout.top \
+-i mp_min5.in \
+-c mut01_min4.rst \
+-ref mut01_min4.rst \
+-r mut01_min5.rst \
+-o mut01_min5.out \
+-inf mut01_min5.inf 
+
+mpirun sander.MPI \
+-O \
+-p mut01_tleapout.top \
+-i mp_min6.in \
+-c mut01_min5.rst \
+-ref mut01_min5.rst \
+-r mut01_min6.rst \
+-o mut01_min6.out \
+-inf mut01_min6.inf
+
+mpirun sander.MPI \
+-O \
+-p mut01_tleapout.top \
+-i mp_min7.in \
+-c mut01_min6.rst \
+-ref mut01_min6.rst \
+-r mut01_min7.rst \
+-o mut01_min7.out \
+-inf mut01_min7.inf
+
+mpirun pmemd.MPI \
+-O \
+-p mut01_tleapout.top \
+-i mp_eq1.in \
+-c mut01_min7.rst \
+-ref mut01_min7.rst \
+-r mut01_md0do300ps.rst \
+-x mut01_md0do300ps.crd \
+-o mut01_md0do300ps.out \
+-inf mut01_md0do300ps.inf
+
+mpirun pmemd.MPI \
+-O \
+-p mut01_tleapout.top \
+-i mp_eq2.in \
+-c mut01_md0do300ps.rst \
+-ref mut01_md0do300ps.rst \
+-r mut01_md5ns.rst \
+-x mut01_md5ns.crd \
+-o mut01_md5ns.out \
+-inf mut01_md5ns.inf
